@@ -1,0 +1,43 @@
+{
+    "order_by"  :"dt",
+    "columns"   :   
+        {
+            "dt": 
+            {
+                "type"  :"date",
+                "start" :"2020-01-01",
+                "end"   :"2020-03-04"
+            },
+            
+            "time": 
+            {
+                "type"  :"time",
+                "start" :"00:00:00",
+                "end"   :"23:59:59"
+            },
+
+            "user_id": 
+            {
+                "type"      :"int",
+                "min"       :10,
+                "max"       :99,
+                "digits"    :2,
+                "prefix"    :"user",
+                "postfix"   :"P"
+            },
+
+            "count": 
+            {
+                "type"  :"int",
+                "min"   :0,
+                "max"   :100000
+            },
+
+            "event":
+            {
+                "type"  :"list",
+                "list"  :["event1", "event2", "event3"],
+                "ratio" :[2,3,4]
+            }
+        }
+}
