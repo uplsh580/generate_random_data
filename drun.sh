@@ -1,11 +1,11 @@
 #!/bin/bash
 
 #TODO:Set names
-TAG="tiny_tools"
-VERSION="0.1"
-CNAME="tiny_tools"
+TAG="grd"
+VERSION="0.1.dev"
+CNAME="grd-dev"
 
-RM_IMAGE=$(docker images "$TAG:$VERSION" -q)
+RM_IMAGE=$(docker images "${TAG}:${VERSION}" -q)
 
 case "$1" in
     --clean) # clean docker image and container
@@ -14,10 +14,10 @@ case "$1" in
         exit 0
         ;;
     --run) # create docker image and run container
-    docker build --tag $TAG:$VERSION .
-    docker container run --name $CNAME \
+    docker build --tag ${TAG}:${VERSION} .
+    docker container run --name ${CNAME} \
         -v $(pwd):/app \
-        -it $TAG:$VERSION \
+        -it ${TAG}:${VERSION} \
         /bin/bash
     exit 0
         ;;
