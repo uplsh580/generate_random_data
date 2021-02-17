@@ -1,0 +1,27 @@
+version: 1
+order_by: dt
+columns:
+    datetime:
+        type: datetime
+        start: 2020-01-01 00:00:00
+        end: 2020-03-04 00:00:00
+    dt:
+        type: date
+        start: 2020-01-01
+        end: 2020-03-04
+    time: 
+        type: time
+        start: 9:00:00
+        end: 23:59:59
+    user_id:
+        type: regex
+        regex: USER\d\d\d\d
+    count:
+        type: int
+        min: 0
+        max: 10000
+        unit: 500
+    event:
+        type: list
+        list: ["event1", "event2", "event3"]
+        ratio: [2,3,10]

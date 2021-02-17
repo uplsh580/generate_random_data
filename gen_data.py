@@ -1,5 +1,5 @@
 import os 
-import json
+import yaml
 import csv
 from operator import itemgetter
 
@@ -14,8 +14,8 @@ def set_col(column_info):
         return COL_REGEX(column_info)
 
 def parser(path):
-    with open(path) as json_file:
-        schema_info = json.load(json_file)
+    with open(path) as yaml_file:
+        schema_info = yaml.load(yaml_file, Loader=yaml.FullLoader)
 
     order_key = None
     if "order_by" in schema_info:
@@ -65,7 +65,7 @@ def csv_output(n:int, col_names:list, cols:list, output_path:str, file_name:str,
 
 if __name__ == '__main__':
     # for TEST
-    path = "./configs/example.json"
+    path = "./configs/example.yaml"
     abs_path = os.path.abspath(path)
     
     col_names, cols, order_key = parser(abs_path)
