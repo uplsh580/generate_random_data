@@ -18,19 +18,15 @@
 
             "user_id": 
             {
-                "type"      :"int",
-                "min"       :10,
-                "max"       :99,
-                "digits"    :2,
-                "prefix"    :"user",
-                "postfix"   :"P"
+                "type"      :"regex"
             },
 
             "count": 
             {
                 "type"  :"int",
                 "min"   :0,
-                "max"   :100000
+                "max"   :10000,
+                "unit"  :500
             },
 
             "event":

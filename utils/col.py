@@ -6,44 +6,24 @@ class COL(metaclass=ABCMeta):
     def gen_data(self):
         pass
 
-
 class COL_INT(COL):
     def __init__(self, info:dict):
         if "min" not in info:
-            raise Exception('"min" is missing from json file')
+            raise Exception('[Config Error] "min" is missing from json file')
         if "max" not in info:
-            raise Exception('"max" is missing from json file')
+            raise Exception('[Config Error] "max" is missing from json file')
 
         self.min = info["min"]
         self.max = info["max"]
+        self.unit = info["unit"]
         if self.min > self.max:
-            raise Exception('"max" is less than "min"')
-
-        self.digits = 0
-
-        if "digits" in info:
-            self.digits = info["digits"]
-        if self.digits != 0 and len(str(self.max)) > self.digits:
-            raise Exception('digits of "max" are more than "digits"')
-
-        self.prefix = ""        
-        if "prefix" in info:
-            self.prefix = info["prefix"]
-
-        self.postfix = ""
-        if "postfix" in info:
-            self.postfix = info["postfix"]
+            raise Exception('[Config Error] "max" is less than "min"')
+        if self.unit > self.max:
+            raise Exception('[Config Error] "unit" is less than "min"')
 
     def gen_data(self):
         super().gen_data()
-        ret = str(random.randint(self.min, self.max+1))
-
-        if self.digits != 0:
-            ret = "0" * (self.digits - len(ret)) + ret
-
-        ret = self.prefix + ret
-        ret += self.postfix
-        return ret
+        return random.randrange(self.min, self.max+1, self.unit)
 
 class COL_LIST(COL):
     def __init__(self, info:dict):
@@ -52,7 +32,7 @@ class COL_LIST(COL):
 
         if "ratio" in info:
             if len(self.list) != len(info["ratio"]):
-                raise Exception('"ratio" length is different from "list" length.')
+                raise Exception('[Config Error] "ratio" length is different from "list" length.')
             self.ratio = info["ratio"]
 
         for i, entity in enumerate(self.ratio):
@@ -65,4 +45,4 @@ class COL_LIST(COL):
 
     def gen_data(self):
         super().gen_data()
-        return str(random.choice(self.list))
+        return random.choice(self.list)

@@ -8,10 +8,6 @@ from utils.col import *
 def set_col(column_info):
     if column_info["type"] == "int":
         return COL_INT(column_info)
-    elif column_info["type"] == "date":
-        pass
-    elif column_info["type"] == "time":
-        pass
     elif column_info["type"] == "list":
         return COL_LIST(column_info)
 
@@ -42,9 +38,9 @@ def csv_output(n:int, col_names:list, cols:list, output_path:str, file_name:str,
         output_path += '/'
 
     if len(col_names) != len(cols):
-        raise Exception(f'Schema Error: "col_names(:{len(col_names)})" len different from "cols" len(:{len(cols)})')
+        raise Exception(f'[Schema Error] "col_names(:{len(col_names)})" len different from "cols" len(:{len(cols)})')
     if order_key != None and order_key not in col_names:
-        raise Exception(f'Order Key Error: "order_key(:{order_key})" is not in "col_names(:{col_names})"')
+        raise Exception(f'[Config Error] "order_key(:{order_key})" is not in "col_names(:{col_names})"')
 
     with open(output_path+file_name,'w', newline='') as outcsv:
         rows = []
@@ -66,9 +62,10 @@ def csv_output(n:int, col_names:list, cols:list, output_path:str, file_name:str,
     outcsv.close()
 
 if __name__ == '__main__':
+    # for TEST
     path = "./configs/example.json"
     abs_path = os.path.abspath(path)
     
     col_names, cols, order_key = parser(abs_path)
-    csv_output(10, col_names, cols, './output/', 'example.csv', order_key='user_id')
+    csv_output(10, col_names, cols, './output/', 'example.csv', order_key='count')
     pass
