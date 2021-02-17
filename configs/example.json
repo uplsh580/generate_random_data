@@ -18,7 +18,8 @@
 
             "user_id": 
             {
-                "type"      :"regex"
+                "type"  :"regex",
+                "regex" :"USER[0-9][0-9][0-9]"
             },
 
             "count": 

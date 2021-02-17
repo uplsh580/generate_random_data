@@ -10,6 +10,8 @@ def set_col(column_info):
         return COL_INT(column_info)
     elif column_info["type"] == "list":
         return COL_LIST(column_info)
+    elif column_info["type"] == "regex":
+        return COL_REGEX(column_info)
 
 def parser(path):
     with open(path) as json_file:

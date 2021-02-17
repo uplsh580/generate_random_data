@@ -1,5 +1,6 @@
 from abc import *
 import random
+import rstr
 
 class COL(metaclass=ABCMeta):
     @abstractmethod
@@ -46,3 +47,11 @@ class COL_LIST(COL):
     def gen_data(self):
         super().gen_data()
         return random.choice(self.list)
+
+class COL_REGEX(COL):
+    def __init__(self, info:dict):
+        self.regex = info["regex"]
+
+    def gen_data(self):
+        super().gen_data()
+        return rstr.xeger(self.regex)
