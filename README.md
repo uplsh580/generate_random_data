@@ -96,7 +96,7 @@ columns:
         [column_name]:
             type: list
             list:
-            ratio
+            ratio:
         ```
         * `list`: The list to enter randomly.
         * `ratio`: (**Optional**) Random rate. Write it in an integer format in the same order as the list.
