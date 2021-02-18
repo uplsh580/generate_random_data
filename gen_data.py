@@ -74,11 +74,7 @@ if __name__ == '__main__':
     outfile_path="./output/"+os.path.basename(args.file_path).replace(".yaml",".csv").replace(".yml",".csv")
     if args.outpath != None:
         outfile_path = args.outpath
-
-    # for TEST
-    path = "./configs/example.yaml"
-    abs_path = os.path.abspath(path)
-    
+    abs_path = os.path.abspath(args.file_path)
     col_names, cols, order_key = parser(abs_path)
-    csv_output(10, col_names, cols, outfile_path, order_key='count')
-    pass
+    
+    csv_output(args.row_number, col_names, cols, outfile_path, order_key=order_key)

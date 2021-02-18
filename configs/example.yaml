@@ -1,5 +1,5 @@
 version: 1
-order_by: dt
+order_by: user_id
 columns:
     datetime:
         type: datetime
