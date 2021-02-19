@@ -10,9 +10,9 @@ class COL(metaclass=ABCMeta):
 class COL_INT(COL):
     def __init__(self, info:dict):
         if "min" not in info:
-            raise Exception('[Config Error] "min" is missing from json file')
+            raise Exception('[Config Error] "min" is missing from config file')
         if "max" not in info:
-            raise Exception('[Config Error] "max" is missing from json file')
+            raise Exception('[Config Error] "max" is missing from config file')
 
         self.min = info["min"]
         self.max = info["max"]
@@ -55,3 +55,21 @@ class COL_REGEX(COL):
     def gen_data(self):
         super().gen_data()
         return rstr.xeger(self.regex)
+
+class COL_DATETIME(COL):
+    def __init__(self, info:dict):
+        if "start_dt" not in info:
+            raise Exception('[Config Error] "start_dt" is missing from config file')
+        if "end_dt" not in info:
+            raise Exception('[Config Error] "end_dt" is missing from config file')
+
+        self.start_dt = info['start_dt']
+        self.end_dt = info["end_dt"]
+        self.format = "%Y-%m-%d %H:%M:%S"
+        if "format" in info:
+            self.format = info["output_format"]
+
+    def gen_data(self):
+        super().gen_data()
+        random_date = self.start_dt + (self.end_dt - self.start_dt) * random.random()
+        return random_date.strftime(self.format)

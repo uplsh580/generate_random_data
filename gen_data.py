@@ -18,10 +18,12 @@ args = parser.parse_args()
 def set_col(column_info):
     if column_info["type"] == "int":
         return COL_INT(column_info)
-    elif column_info["type"] == "list":
-        return COL_LIST(column_info)
     elif column_info["type"] == "regex":
         return COL_REGEX(column_info)
+    elif column_info["type"] == "list":
+        return COL_LIST(column_info)
+    elif column_info["type"] == "datetime":
+        return COL_DATETIME(column_info)
 
 def parser(path):
     with open(path) as yaml_file:

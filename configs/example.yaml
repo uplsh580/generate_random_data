@@ -1,18 +1,11 @@
 version: 1
-order_by: user_id
+order_by: datetime
 columns:
     datetime:
         type: datetime
-        start: 2020-01-01 00:00:00
-        end: 2020-03-04 00:00:00
-    dt:
-        type: date
-        start: 2020-01-01
-        end: 2020-03-04
-    time: 
-        type: time
-        start: 9:00:00
-        end: 23:59:59
+        start_dt: 2020-01-01 00:00:00
+        end_dt: 2020-03-04 00:00:00
+        output_format: "%Y-%m-%d %H:%M:%S"
     user_id:
         type: regex
         regex: USER\d\d\d\d

@@ -107,3 +107,24 @@ columns:
             list: ["event1", "event2", "event3"]
             ratio: [2,3,10]
         ```
+* datetime
+    * Format
+        ```
+        [column_name]:
+            type: datetime
+            start_dt:
+            end_dt:
+            output_format:
+        ```
+        * `start_dt`: Start date. Write in **YYYY-MM-DD HH:MM:SS** format.(e.g 2020-01-01 00:00:00)
+        * `end_dt`: End date. Write in **YYYY-MM-DD HH:MM:SS** format.(e.g 2020-01-01 00:00:00)
+        * `output_format`: (**Optional**) The output format. Write quotation marks together. Format can be found on [Link](https://www.w3schools.com/python/python_datetime.asp) <br>
+        Default format : "%Y-%m-%d %H:%M:%S"
+    * Example
+        ```
+        datetime:
+            type: datetime
+            start_dt: 2020-01-01 00:00:00
+            end_dt: 2020-03-04 00:00:00
+            output_format: "%Y-%m-%d %H:%M:%S"
+        ```
