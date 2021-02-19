@@ -1,4 +1,8 @@
 *.csv
+*.yaml
+*.yml
+
+.DS_Store
 test/
 
 # Byte-compiled / optimized / DLL files
