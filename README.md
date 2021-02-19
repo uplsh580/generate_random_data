@@ -26,17 +26,16 @@ Creates random data for a csv form.
 * Check the result csv file. (`./output/example.csv`) <br>
     You can find csv file like below.
     ```
-    user_id,count,event
-    USER0862,2000,event3
-    USER3258,5500,event2
-    USER4921,9000,event2
-    USER5777,1000,event1
-    USER6379,3500,event1
-    USER6822,7500,event2
-    USER8718,4500,event1
-    USER8807,5500,event3
-    USER8999,4000,event3
-    USER9277,6500,event3
+    datetime,user_id,count,event
+    2020-01-01 10:08:28,USER4015,0,event1
+    2020-01-01 17:59:15,USER5321,9000,event2
+    2020-01-02 04:11:20,USER6996,3500,event3
+    2020-01-02 05:35:06,USER1091,500,event3
+    2020-01-02 10:01:16,USER6835,9500,event3
+    2020-01-03 16:39:04,USER5979,3500,event2
+    2020-01-03 22:16:21,USER2750,5500,event2
+    2020-01-04 02:28:32,USER8625,7500,event1
+    2020-01-04 07:20:42,USER9077,8500,event3
     ```
 
 ## How to Write config file?
