@@ -1,0 +1,20 @@
+version: 1
+order_by: datetime
+columns:
+    datetime:
+        type: datetime
+        start_dt: 2020-01-01 00:00:00
+        end_dt: 2020-03-04 00:00:00
+        output_format: "%Y-%m-%d %H:%M:%S"
+    user_id:
+        type: regex
+        regex: USER\d\d\d\d
+    count:
+        type: int
+        min: 0
+        max: 10000
+        unit: 500
+    event:
+        type: list
+        list: ["event1", "event2", "event3"]
+        ratio: [2,3,10]
