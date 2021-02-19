@@ -51,7 +51,7 @@ columns:
     ...
 ```
 * `version`: Config File Interpretation Version (Currently, only `1` is available.)
-* `order_by`: (**Optional**) Column name to be sorted at output. (Must exist in columns.)
+* `order_by`: Column name to be sorted at output. (Must exist in columns.)
 * `columns `: The column setting to be output. The columns are printed in the order in which were written.
 
 ### Available Column Types
