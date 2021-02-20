@@ -1,19 +1,21 @@
 import os
-from typing import DefaultDict 
 import yaml
 import csv
 import argparse
-
 from operator import itemgetter
-
 from utils.col import *
 
 parser = argparse.ArgumentParser(description='')
-parser.add_argument('-n', required=True, dest='row_number', type=int, help='Number of rows')
-parser.add_argument('-f', required=True, dest='file_path', type=str, help='config file(YAML) path')
-parser.add_argument('-o', dest='outpath', type=str, help='output path')
-parser.add_argument('--noheader', action='store_true', help='remove header line in output csv file')
+parser.add_argument('-n', required=True, dest='row_number', type=int,
+                    help='Number of rows')
+parser.add_argument('-f', required=True, dest='file_path', type=str,
+                    help='config file(YAML) path')
+parser.add_argument('-o', dest='outfile_dir', type=str, default="output/"
+                    help='output file directory')
+parser.add_argument('--noheader', action='store_true',
+                    help='remove header line in output csv file')
 args = parser.parse_args()
+
 
 def set_col(column_info):
     if column_info["type"] == "int":
@@ -25,6 +27,9 @@ def set_col(column_info):
     elif column_info["type"] == "datetime":
         return COL_DATETIME(column_info)
 
+    raise Exception(f'[Config Error] "{column_info["type"]}" is not a supported type.')
+
+
 def parser(path):
     with open(path) as yaml_file:
         schema_info = yaml.load(yaml_file, Loader=yaml.FullLoader)
@@ -34,49 +39,49 @@ def parser(path):
         order_key = schema_info["order_by"]
 
     col_names = []
-    cols = []
-
+    col_instances = []
     for c_name, c_info in schema_info["columns"].items():
         col = set_col(c_info)
-
         if col is None:
             continue
-
-        cols.append(col)
+        col_instances.append(col)
         col_names.append(c_name)
 
-    return col_names, cols, order_key
+    return col_names, col_instances, order_key
 
-def csv_output(n:int, col_names:list, cols:list, outfile_path:str, with_header:bool=True,  order_key:str=None) -> None:
-    if len(col_names) != len(cols):
-        raise Exception(f'[Schema Error] "col_names(:{len(col_names)})" len different from "cols" len(:{len(cols)})')
-    if order_key != None and order_key not in col_names:
-        raise Exception(f'[Config Error] "order_key(:{order_key})" is not in "col_names(:{col_names})"')
 
-    with open(outfile_path,'w', newline='') as outcsv:
+def csv_output(n: int, col_names: list, col_instances: list, outfile_path: str,
+               with_header: bool = True,  order_key: str = None) -> None:
+    if len(col_names) != len(col_instances):
+        raise Exception(f'[Internal Error] "col_names({len(col_names)})" len different from "cols" len({len(cols)})')
+    if order_key is not None and order_key not in col_names:
+        raise Exception(f'[Config Error] "order_key({order_key})" is not in "col_names({col_names})"')
+
+    with open(outfile_path, 'w', newline='') as outcsv:
         rows = []
         for i in range(n):
-            rows.append(list(map(lambda col : col.gen_data(), cols)))
+            rows.append(list(map(lambda col: col.gen_data(), col_instances)))
 
-        if order_key != None:
+        if order_key is not None:
             order_index = col_names.index(order_key)
             rows = sorted(rows, key=itemgetter(order_index))
 
         wr = csv.writer(outcsv)
-
         if with_header:
             wr.writerow(col_names)
-
         for row in rows:
             wr.writerow(row)
 
-    outcsv.close()
 
 if __name__ == '__main__':
-    outfile_path="./output/"+os.path.basename(args.file_path).replace(".yaml",".csv").replace(".yml",".csv")
-    if args.outpath != None:
-        outfile_path = args.outpath
-    abs_path = os.path.abspath(args.file_path)
-    col_names, cols, order_key = parser(abs_path)
-    
-    csv_output(args.row_number, col_names, cols, outfile_path, order_key=order_key)
+    outfile_dir = os.path.abspath((args.outfile_dir)
+    outfile_name = os.path.basename(args.file_path)
+    outfile_name = outfile_name.replace(".yml", ".csv").replace(".yaml", ".csv")
+
+    outfile_path_abs = outfile_dir + '/' + outfile_name
+
+    config_path_abs = os.path.abspath(args.file_path)
+    col_names, col_instances, order_key = parser(config_path_abs)
+
+    csv_output(args.row_number, col_names, col_instances,
+               outfile_path_abs, order_key=order_key)
