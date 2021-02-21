@@ -1,4 +1,9 @@
 *.csv
+*.yaml
+*.yml
+
+.DS_Store
+.vscode
 test/
 
 # Byte-compiled / optimized / DLL files

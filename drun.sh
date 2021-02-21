@@ -1,9 +1,8 @@
 #!/bin/bash
 
-#TODO:Set names
 TAG="grd"
-VERSION="0.1.dev"
-CNAME="grd-dev"
+VERSION="1.0.0"
+CNAME="grd"
 
 RM_IMAGE=$(docker images "${TAG}:${VERSION}" -q)
 
