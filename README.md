@@ -1,4 +1,7 @@
 # GRD: Generate Random Data
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/uplsh580/generate_random_data) 
+![GitHub](https://img.shields.io/github/license/uplsh580/generate_random_data)
+<br>
 Creates random data and saves it as .csv file.
 <hr>
 
