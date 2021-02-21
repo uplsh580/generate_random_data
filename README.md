@@ -52,7 +52,7 @@ Creates random data and saves it as .csv file.
 * Arguments
     * `-n`: Number of data row to generate
     * `-f`: config file path
-    * `-o`: **(Optional)** Output File Location (Default : `output/{configfilename}.csv`)
+    * `-o`: **(Optional)** Output File Directory (Default : `output/`)
 * Options
     * `--noheader`: **(Optional)** Remove the header from the csv file to be output.
 
