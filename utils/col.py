@@ -1,14 +1,16 @@
-from abc import *
+from abc import ABCMeta, abstractmethod
 import random
 import rstr
+
 
 class COL(metaclass=ABCMeta):
     @abstractmethod
     def gen_data(self):
         pass
 
+
 class COL_INT(COL):
-    def __init__(self, info:dict):
+    def __init__(self, info: dict):
         if "min" not in info:
             raise Exception('[Config Error] "min" is missing from config file')
         if "max" not in info:
@@ -26,8 +28,9 @@ class COL_INT(COL):
         super().gen_data()
         return random.randrange(self.min, self.max+1, self.unit)
 
+
 class COL_LIST(COL):
-    def __init__(self, info:dict):
+    def __init__(self, info: dict):
         self.list = info["list"]
         self.ratio = [1] * len(self.list)
 
@@ -48,16 +51,18 @@ class COL_LIST(COL):
         super().gen_data()
         return random.choice(self.list)
 
+
 class COL_REGEX(COL):
-    def __init__(self, info:dict):
+    def __init__(self, info: dict):
         self.regex = info["regex"]
 
     def gen_data(self):
         super().gen_data()
         return rstr.xeger(self.regex)
 
+
 class COL_DATETIME(COL):
-    def __init__(self, info:dict):
+    def __init__(self, info: dict):
         if "start_dt" not in info:
             raise Exception('[Config Error] "start_dt" is missing from config file')
         if "end_dt" not in info:
