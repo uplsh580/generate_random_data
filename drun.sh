@@ -1,7 +1,7 @@
 #!/bin/bash
 
 TAG="grd"
-VERSION="1.0.1"
+VERSION="1.0.0"
 CNAME="grd"
 
 RM_IMAGE=$(docker images "${TAG}:${VERSION}" -q)
