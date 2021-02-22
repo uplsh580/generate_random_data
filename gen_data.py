@@ -74,7 +74,6 @@ def csv_output(n: int, col_names: list, col_instances: list, outfile_path: str,
         rows = sorted(rows, key=itemgetter(order_index))
         print("[INFO] Sorting data... (DONE)")
 
-
     with open(outfile_path, 'w', newline='') as outcsv:
         print("[INFO] Creating CSV file...")
         wr = csv.writer(outcsv)
