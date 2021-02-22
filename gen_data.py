@@ -6,7 +6,6 @@ from operator import itemgetter
 from utils.col import COL_INT, COL_REGEX, COL_LIST, COL_DATETIME
 from tqdm import tqdm
 
-
 parser = argparse.ArgumentParser(description='')
 parser.add_argument('-n', required=True, dest='row_number', type=int,
                     help='Number of rows')
