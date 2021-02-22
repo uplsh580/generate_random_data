@@ -4,6 +4,7 @@ import csv
 import argparse
 from operator import itemgetter
 from utils.col import COL_INT, COL_REGEX, COL_LIST, COL_DATETIME
+from tqdm import tqdm
 
 parser = argparse.ArgumentParser(description='')
 parser.add_argument('-n', required=True, dest='row_number', type=int,
@@ -57,23 +58,31 @@ def csv_output(n: int, col_names: list, col_instances: list, outfile_path: str,
     if order_key is not None and order_key not in col_names:
         raise Exception(f'[Config Error] "order_key({order_key})" is not in "col_names({col_names})"')
 
+    rows = []
+    print("[INFO] Generating data...")
+    for i in tqdm(range(n)):
+        rows.append(list(map(lambda col: col.gen_data(), col_instances)))
+    print()
+    print("[INFO] Generating data... (DONE)")
+
+    if order_key is not None:
+        print("[INFO] Sorting data...")
+        order_index = col_names.index(order_key)
+        rows = sorted(rows, key=itemgetter(order_index))
+        print("[INFO] Sorting data... (DONE)")
+
     with open(outfile_path, 'w', newline='') as outcsv:
-        rows = []
-        for i in range(n):
-            rows.append(list(map(lambda col: col.gen_data(), col_instances)))
-
-        if order_key is not None:
-            order_index = col_names.index(order_key)
-            rows = sorted(rows, key=itemgetter(order_index))
-
+        print("[INFO] Creating CSV file...")
         wr = csv.writer(outcsv)
         if with_header:
             wr.writerow(col_names)
         for row in rows:
             wr.writerow(row)
+        print("[INFO] Creating CSV file... (DONE)")
 
 
 if __name__ == '__main__':
+    print("[INFO] Program start")
     outfile_dir = os.path.abspath(args.outfile_dir)
     outfile_name = os.path.basename(args.file_path)
     outfile_name = outfile_name.replace(".yml", ".csv").replace(".yaml", ".csv")
@@ -85,3 +94,4 @@ if __name__ == '__main__':
 
     csv_output(args.row_number, col_names, col_instances,
                outfile_path_abs, order_key=order_key)
+    print("[INFO] Successfully created")
