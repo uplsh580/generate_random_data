@@ -4,7 +4,7 @@ import csv
 import argparse
 from operator import itemgetter
 from utils.col import COL_INT, COL_REGEX, COL_LIST, COL_DATETIME
-import progressbar
+from tqdm import tqdm
 
 
 parser = argparse.ArgumentParser(description='')
@@ -60,11 +60,9 @@ def csv_output(n: int, col_names: list, col_instances: list, outfile_path: str,
         raise Exception(f'[Config Error] "order_key({order_key})" is not in "col_names({col_names})"')
 
     rows = []
-    gd_pbar = progressbar.ProgressBar(maxval=n).start()
     print("[INFO] Generating data...")
-    for i in range(n):
+    for i in tqdm(range(n)):
         rows.append(list(map(lambda col: col.gen_data(), col_instances)))
-        gd_pbar.update(i)
     print()
     print("[INFO] Generating data... (DONE)")
 
