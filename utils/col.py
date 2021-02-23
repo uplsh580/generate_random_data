@@ -12,17 +12,17 @@ class COL(metaclass=ABCMeta):
 class COL_INT(COL):
     def __init__(self, info: dict):
         if "min" not in info:
-            raise Exception('[Config Error] "min" is missing from config file')
+            raise Exception('[Config Error] "min" is missing from config file.')
         if "max" not in info:
-            raise Exception('[Config Error] "max" is missing from config file')
+            raise Exception('[Config Error] "max" is missing from config file.')
 
         self.min = info["min"]
         self.max = info["max"]
         self.unit = info["unit"]
         if self.min > self.max:
-            raise Exception('[Config Error] "max" is less than "min"')
+            raise Exception('[Config Error] "max" is less than "min".')
         if self.unit > self.max:
-            raise Exception('[Config Error] "unit" is less than "min"')
+            raise Exception('[Config Error] "unit" is less than "min".')
 
     def gen_data(self):
         super().gen_data()
@@ -64,9 +64,9 @@ class COL_REGEX(COL):
 class COL_DATETIME(COL):
     def __init__(self, info: dict):
         if "start_dt" not in info:
-            raise Exception('[Config Error] "start_dt" is missing from config file')
+            raise Exception('[Config Error] "start_dt" is missing from config file.')
         if "end_dt" not in info:
-            raise Exception('[Config Error] "end_dt" is missing from config file')
+            raise Exception('[Config Error] "end_dt" is missing from config file.')
 
         self.start_dt = info['start_dt']
         self.end_dt = info["end_dt"]
@@ -78,3 +78,36 @@ class COL_DATETIME(COL):
         super().gen_data()
         random_date = self.start_dt + (self.end_dt - self.start_dt) * random.random()
         return random_date.strftime(self.format)
+
+
+class COL_DECIMAL(COL):
+    def __init__(self, info: dict):
+        if "min" not in info:
+            raise Exception('[Config Error] "min" is missing from config file.')
+        if "max" not in info:
+            raise Exception('[Config Error] "max" is missing from config file.')
+
+        self.min = info["min"]
+        if self.min < -1 or self.min > 1:
+            raise Exception(f'[Config Error] "min({self.min})" is not a range between -1 and 1.')
+
+        self.max = info["max"]
+        if self.max < -1 or self.max > 1:
+            raise Exception(f'[Config Error] "max({self.max})" is not a range between -1 and 1.')
+
+        if self.min > self.max:
+            raise Exception(f'[Config Error] "max({self.max})" is less than "min({self.min})."')
+
+        if "decimal_len" not in info:
+            raise Exception('[Config Error] "decimal_len" is missing from config file')
+        self.decimal_len = info["decimal_len"]
+        if self.decimal_len < 1 or self.decimal_len > 16:
+            raise Exception(f'[Config Error] "decimal_len({self.decimal_len})" is not a range between 1 and 16.')
+
+        self.multiple = 1
+        if "multiple" in info:
+            self.multiple = info["multiple"]
+
+    def gen_data(self):
+        super().gen_data()
+        return round(random.uniform(self.max, self.min) * self.multiple, self.decimal_len)
