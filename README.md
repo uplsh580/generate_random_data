@@ -34,17 +34,17 @@ Generate random data and saves it as .csv file.
 * Check the result csv file. (`./output/example.csv`) <br>
     * You can find csv file like below.
         ```
-        datetime,user_id,count,event
-        2020-01-01 10:08:28,USER4015,0,event1
-        2020-01-01 17:59:15,USER5321,9000,event2
-        2020-01-02 04:11:20,USER6996,3500,event3
-        2020-01-02 05:35:06,USER1091,500,event3
-        2020-01-02 10:01:16,USER6835,9500,event3
-        2020-01-03 16:39:04,USER5979,3500,event2
-        2020-01-03 22:16:21,USER2750,5500,event2
-        2020-01-04 02:28:32,USER8625,7500,event1
-        2020-01-04 07:20:42,USER9077,8500,event3
-        2020-01-04 22:43:59,USER9691,7500,event3
+        datetime,user_id,count,event,score
+        2020-01-01 00:05:31,USER7896,1000,event2,23.6367
+        2020-01-09 12:45:43,USER0517,0,event3,0.5963
+        2020-01-11 20:12:32,USER6713,0,event3,85.2828
+        2020-01-14 17:43:28,USER3086,4000,event3,69.829
+        2020-01-27 22:49:21,USER4707,8500,event3,7.31
+        2020-02-02 01:26:51,USER5346,2500,event3,40.2701
+        2020-02-14 13:00:45,USER4050,7500,event3,71.3598
+        2020-02-15 18:28:33,USER5319,4500,event3,28.7195
+        2020-02-16 17:32:08,USER2759,3500,event2,65.7312
+        2020-03-02 04:38:44,USER8396,2500,event3,56.5897
         ```
 <hr>
 
@@ -156,4 +156,35 @@ columns:
         start_dt: 2020-01-01 00:00:00
         end_dt: 2020-03-04 00:00:00
         output_format: "%Y-%m-%d %H:%M:%S"
+    ```
+
+#### **DECIMAL**
+* Format
+    ```
+    [column_name]:
+        type: decimal
+        min:
+        max:
+        point_move:
+        decimal_len:
+    ```
+    * `min`: Min number of range
+        * Input Range: -1 ~ 1
+    * `max`: Max number of range
+        * Input Range: -1 ~ 1
+    * `point_move`: (**Optional**) Move the point. If the input number is positive, move the integer direction and the other is the negative decimal direction.
+        * Input Range: -16 ~ 16
+        * Default : 0
+    * `decimal_len`: (**Optional**) Enter the length of the decimal part.
+        * Input Range: 0 ~ 16
+        * Default : 4
+
+* Example
+    ```
+    score:
+        type: decimal
+        min: -0.1
+        max: 0.9
+        point_move: 2
+        decimal_len: 4
     ```

@@ -3,7 +3,7 @@ import yaml
 import csv
 import argparse
 from operator import itemgetter
-from utils.col import COL_INT, COL_REGEX, COL_LIST, COL_DATETIME
+from utils.col import COL_INT, COL_REGEX, COL_LIST, COL_DATETIME, COL_DECIMAL
 from tqdm import tqdm
 
 parser = argparse.ArgumentParser(description='')
@@ -27,8 +27,10 @@ def set_col(column_info):
         return COL_LIST(column_info)
     elif column_info["type"] == "datetime":
         return COL_DATETIME(column_info)
-
-    raise Exception(f'[Config Error] "{column_info["type"]}" is not a supported type.')
+    elif column_info["type"] == "decimal":
+        return COL_DECIMAL(column_info)
+    else:
+        raise Exception(f'[Config Error] "{column_info["type"]}" is not a supported type.')
 
 
 def parser(path):

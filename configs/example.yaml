@@ -18,3 +18,9 @@ columns:
         type: list
         list: ["event1", "event2", "event3"]
         ratio: [2,3,10]
+    score:
+        type: decimal
+        min: -0.1
+        max: 0.9
+        point_move: 2
+        decimal_len: 4
