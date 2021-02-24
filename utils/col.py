@@ -103,13 +103,13 @@ class COL_DECIMAL(COL):
             self.point_move = info["point_move"]
         if self.point_move < -16 or self.point_move > 16:
             raise Exception(f'[Config Error] "point_move({self.point_move})" is not a range between -16 and 16.')
-        
+
         self.decimal_len = 4
         if "decimal_len" in info:
             self.decimal_len = info["decimal_len"]
         if self.decimal_len < 0 or self.decimal_len > 16:
             raise Exception(f'[Config Error] "decimal_len({self.decimal_len})" is not a range between 0 and 16.')
-        
+
     def gen_data(self):
         super().gen_data()
         return round(random.uniform(self.max, self.min) * pow(10, self.point_move), self.decimal_len)
