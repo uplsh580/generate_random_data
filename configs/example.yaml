@@ -22,5 +22,5 @@ columns:
         type: decimal
         min: -0.1
         max: 0.9
-        multiple: 100
-        decimal_len: 10
+        point_move: 2
+        decimal_len: 4

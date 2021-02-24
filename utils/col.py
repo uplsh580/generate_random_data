@@ -98,16 +98,18 @@ class COL_DECIMAL(COL):
         if self.min > self.max:
             raise Exception(f'[Config Error] "max({self.max})" is less than "min({self.min})."')
 
-        if "decimal_len" not in info:
-            raise Exception('[Config Error] "decimal_len" is missing from config file')
-        self.decimal_len = info["decimal_len"]
-        if self.decimal_len < 1 or self.decimal_len > 16:
-            raise Exception(f'[Config Error] "decimal_len({self.decimal_len})" is not a range between 1 and 16.')
-
-        self.multiple = 1
-        if "multiple" in info:
-            self.multiple = info["multiple"]
-
+        self.point_move = 1
+        if "point_move" in info:
+            self.point_move = info["point_move"]
+        if self.point_move < -16 or self.point_move > 16:
+            raise Exception(f'[Config Error] "point_move({self.point_move})" is not a range between -16 and 16.')
+        
+        self.decimal_len = 4
+        if "decimal_len" in info:
+            self.decimal_len = info["decimal_len"]
+        if self.decimal_len < 0 or self.decimal_len > 16:
+            raise Exception(f'[Config Error] "decimal_len({self.decimal_len})" is not a range between 0 and 16.')
+        
     def gen_data(self):
         super().gen_data()
-        return round(random.uniform(self.max, self.min) * self.multiple, self.decimal_len)
+        return round(random.uniform(self.max, self.min) * pow(10, self.point_move), self.decimal_len)
