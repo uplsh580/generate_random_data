@@ -1,5 +1,5 @@
 version: 1
-order_by: datetime
+order_by: datetime event count
 columns:
     datetime:
         type: datetime
@@ -12,7 +12,7 @@ columns:
     count:
         type: int
         min: 0
-        max: 10000
+        max: 1000
         unit: 500
     event:
         type: list

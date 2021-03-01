@@ -37,9 +37,9 @@ def parser(path):
     with open(path) as yaml_file:
         schema_info = yaml.load(yaml_file, Loader=yaml.FullLoader)
 
-    order_key = None
+    order_keys = None
     if "order_by" in schema_info:
-        order_key = schema_info["order_by"].split())
+        order_keys = schema_info["order_by"].split()
 
     col_names = []
     col_instances = []
@@ -57,7 +57,7 @@ def csv_output(n: int, col_names: list, col_instances: list, outfile_path: str,
                with_header: bool = True,  order_keys: list = None) -> None:
     if len(col_names) != len(col_instances):
         raise Exception(f'[Internal Error] "col_names({len(col_names)})" len different from "cols" len({len(col_instances)})')
-    if order_keys is not None and set(order_keys).issubset(set(col_names)):
+    if order_keys is not None and not set(order_keys).issubset(set(col_names)):
         raise Exception(f'[Config Error] There are "order_key({order_keys})" that does not exist in the "col_names({col_names})".')
 
     rows = []
@@ -72,7 +72,7 @@ def csv_output(n: int, col_names: list, col_instances: list, outfile_path: str,
         order_indexs = []
         for ok in order_keys:
             order_indexs.append(col_names.index(ok))
-        rows = sorted(rows, key=itemgetter(order_indexs))
+        rows = sorted(rows, key=lambda x: tuple([x[i] for i in order_indexs]))
         print("[INFO] Sorting data... (DONE)")
 
     with open(outfile_path, 'w', newline='') as outcsv:

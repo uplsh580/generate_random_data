@@ -35,16 +35,16 @@ Generate random data and saves it as .csv file.
     * You can find csv file like below.
         ```
         datetime,user_id,count,event,score
-        2020-01-01 00:05:31,USER7896,1000,event2,23.6367
-        2020-01-09 12:45:43,USER0517,0,event3,0.5963
-        2020-01-11 20:12:32,USER6713,0,event3,85.2828
-        2020-01-14 17:43:28,USER3086,4000,event3,69.829
-        2020-01-27 22:49:21,USER4707,8500,event3,7.31
-        2020-02-02 01:26:51,USER5346,2500,event3,40.2701
-        2020-02-14 13:00:45,USER4050,7500,event3,71.3598
-        2020-02-15 18:28:33,USER5319,4500,event3,28.7195
-        2020-02-16 17:32:08,USER2759,3500,event2,65.7312
-        2020-03-02 04:38:44,USER8396,2500,event3,56.5897
+        2020-01-16 04:35:35,USER7338,500,event1,44.1774
+        2020-01-17 05:55:09,USER0215,1000,event3,74.5447
+        2020-01-30 09:02:14,USER5302,1000,event2,11.1635
+        2020-01-31 15:21:52,USER5800,500,event2,11.7582
+        2020-02-16 01:24:15,USER2721,1000,event3,-2.2749
+        2020-02-19 03:55:35,USER0456,500,event3,68.8935
+        2020-02-19 19:10:12,USER1290,1000,event3,25.8411
+        2020-02-25 00:21:44,USER7537,0,event3,14.9393
+        2020-03-02 05:54:15,USER5827,1000,event2,76.6525
+        2020-03-03 18:49:15,USER2682,500,event3,16.0702
         ```
 <hr>
 
@@ -74,6 +74,8 @@ columns:
     * Currently, only `1` is available.
 * `order_by`: (**Optional**) Column name to be sorted at the output. 
     * Must exist in columns.
+    * You can set multiple sorting keys.
+        * Separate key values with spaces. (e.g. `order_by: datetime event count`)
 * `columns`: The column info to be output. 
     * The columns are printed in the order in which were written.
 
