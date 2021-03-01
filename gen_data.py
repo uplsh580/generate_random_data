@@ -37,9 +37,9 @@ def parser(path):
     with open(path) as yaml_file:
         schema_info = yaml.load(yaml_file, Loader=yaml.FullLoader)
 
-    order_key = None
+    order_keys = None
     if "order_by" in schema_info:
-        order_key = schema_info["order_by"]
+        order_keys = schema_info["order_by"].split()
 
     col_names = []
     col_instances = []
@@ -50,15 +50,15 @@ def parser(path):
         col_instances.append(col)
         col_names.append(c_name)
 
-    return col_names, col_instances, order_key
+    return col_names, col_instances, order_keys
 
 
 def csv_output(n: int, col_names: list, col_instances: list, outfile_path: str,
-               with_header: bool = True,  order_key: str = None) -> None:
+               with_header: bool = True,  order_keys: list = None) -> None:
     if len(col_names) != len(col_instances):
         raise Exception(f'[Internal Error] "col_names({len(col_names)})" len different from "cols" len({len(col_instances)})')
-    if order_key is not None and order_key not in col_names:
-        raise Exception(f'[Config Error] "order_key({order_key})" is not in "col_names({col_names})"')
+    if order_keys is not None and not set(order_keys).issubset(set(col_names)):
+        raise Exception(f'[Config Error] There are "order_key({order_keys})" that does not exist in the "col_names({col_names})".')
 
     rows = []
     print("[INFO] Generating data...")
@@ -67,10 +67,12 @@ def csv_output(n: int, col_names: list, col_instances: list, outfile_path: str,
     print()
     print("[INFO] Generating data... (DONE)")
 
-    if order_key is not None:
+    if order_keys is not None:
         print("[INFO] Sorting data...")
-        order_index = col_names.index(order_key)
-        rows = sorted(rows, key=itemgetter(order_index))
+        order_indexs = []
+        for ok in order_keys:
+            order_indexs.append(col_names.index(ok))
+        rows = sorted(rows, key=lambda x: tuple([x[i] for i in order_indexs]))
         print("[INFO] Sorting data... (DONE)")
 
     with open(outfile_path, 'w', newline='') as outcsv:
@@ -92,8 +94,8 @@ if __name__ == '__main__':
     outfile_path_abs = outfile_dir + '/' + outfile_name
 
     config_path_abs = os.path.abspath(args.file_path)
-    col_names, col_instances, order_key = parser(config_path_abs)
+    col_names, col_instances, order_keys = parser(config_path_abs)
 
     csv_output(args.row_number, col_names, col_instances,
-               outfile_path_abs, order_key=order_key)
+               outfile_path_abs, order_keys=order_keys)
     print("[INFO] Successfully created")
